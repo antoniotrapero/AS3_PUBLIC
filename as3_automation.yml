@@ -1,0 +1,21 @@
+---
+- name: DEPLOY AS3 DECLARATION
+  hosts: localhost
+  connection: local
+  gather_facts: no
+  vars:
+    uri_method: POST
+  vars_files:
+  - ../CREDENTIALS/creds.yml
+  tasks:
+  - name: DEPLOY AS3E
+    uri:
+      url: https://3.9.156.187/mgmt/shared/appsvcs/declare
+      user: "{{ bigip_usr }}"
+      password: "{{ bigip_pwd }}"
+      method: "{{ uri_method }}"
+      body: "{{ lookup('file','data.json') }}"
+      force_basic_auth: yes
+      status_code: 200
+      body_format: json
+      validate_certs: no
